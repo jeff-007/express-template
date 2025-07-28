@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev":"nodemon ./app.js"
+    "dev": "nodemon ./app.js"
   },
   "repository": {
     "type": "git",
@@ -14,7 +14,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
     "express": "^4.17.3",
+    "express-validator": "^7.2.1",
+    "mongoose": "^8.15.0",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.15"
   }
 }
