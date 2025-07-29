@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const crypto = require('crypto');
+
 
 // 注册用户信息表
 const UserSchema = new mongoose.Schema({
@@ -13,6 +15,10 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    set: function(password) {
+      return crypto.createHash('md5').update(password).digest('hex');
+    },
+    select: false,
   },
   phone: {
     type: String,
