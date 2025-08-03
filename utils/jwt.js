@@ -6,7 +6,7 @@ const verify = promisify(jwt.verify)
 
 const createToken = async (payload) => {
   const token = await toJwt(payload, process.env.JWT_SECRET, {
-    expiresIn: 60
+    expiresIn: 60 * 60 * 24
   })
   return token
 }

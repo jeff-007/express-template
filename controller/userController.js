@@ -29,6 +29,7 @@ const register = async (req, res) => {
 
 // 查询所有手机号不为空的用户
 const getUsers = async (req, res) => {
+  console.log(req.user)
 
   // try {
   //   // 构建查询条件：手机号不为空
@@ -45,8 +46,17 @@ const getUsers = async (req, res) => {
   // }
 }
 
+// 更新用户信息
+const update = async (req, res) => {
+  console.log(req.body)
+  const userModel = new Users(req.body)
+  const dbBack = await userModel.save()
+  res.status(201).json(dbBack)
+}
+
 module.exports = {
   login,
   register,
-  getUsers
+  getUsers,
+  update
 }

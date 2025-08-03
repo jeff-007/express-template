@@ -9,8 +9,8 @@ const register = validatorAll([
     .notEmpty()
     .withMessage('用户名不能为空')
     .bail()
-    .isLength({ min: 3 })
-    .withMessage('用户名长度不能小于3个字符')
+    .isLength({ min: 2 })
+    .withMessage('用户名长度不能小于2个字符')
     .bail(),
   body('password').isLength({ min: 1 }).withMessage('密码不能为空'),
   body('email')
@@ -54,7 +54,45 @@ const login = validatorAll([
   body('password').notEmpty().withMessage('密码不能为空').bail(),
 ])
 
+const update = validatorAll([
+  body('username')
+    .isLength({ min: 2 })
+    .withMessage('用户名长度不能小于2个字符')
+    .bail()
+    .custom(async (val) => {
+      // 验证用户名是否已存在
+      const existUsername = await Users.findOne({ username: val })
+      if (existUsername) {
+        return Promise.reject('用户名已存在')
+      }
+    })
+    .bail(),
+  body('email')
+    .isEmail()
+    .withMessage('邮箱格式不正确')
+    .bail()
+    .custom(async (val) => {
+      const existEmail = await Users.findOne({ email: val })
+      if (existEmail) {
+        return Promise.reject('邮箱已存在')
+      }
+    })
+    .bail(),
+  body('phone')
+    .isEmail()
+    .withMessage('邮箱格式不正确')
+    .bail()
+    .custom(async (val) => {
+      const existEmail = await Users.findOne({ email: val })
+      if (existEmail) {
+        return Promise.reject('邮箱已存在')
+      }
+    })
+    .bail(),
+])
+
 module.exports = {
   register,
   login,
+  update,
 }

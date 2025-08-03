@@ -37,6 +37,17 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  // 视频频道封面
+  cover: {
+    type: String,
+    default:
+      'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg',
+  },
+  // 视频频道描述信息  
+  channelDes: {
+    type: String,
+    default: 'user',
+  },
 })
 
 module.exports = UserSchema
