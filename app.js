@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
+const path = require('path')
 
 const router = require('./router')
 
@@ -16,6 +17,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
 // 跨域处理
 app.use(cors())
+// 静态文件服务
+app.use('/public', express.static(path.join(__dirname, 'public')))
 app.use(router)
 
 // 页面404处理中间件

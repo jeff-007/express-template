@@ -30,6 +30,7 @@ const register = async (req, res) => {
 // 查询所有手机号不为空的用户
 const getUsers = async (req, res) => {
   console.log(req.user)
+  res.status(200).json(req.user)
 
   // try {
   //   // 构建查询条件：手机号不为空
@@ -48,10 +49,24 @@ const getUsers = async (req, res) => {
 
 // 更新用户信息
 const update = async (req, res) => {
-  console.log(req.body)
-  const userModel = new Users(req.body)
-  const dbBack = await userModel.save()
-  res.status(201).json(dbBack)
+  try {
+    // 根据当前用户ID更新用户信息
+    const updateData = await Users.findByIdAndUpdate(
+      req.user._id, 
+      req.body,
+      { new: true, runValidators: true }  // 返回更新后的数据并运行验证
+    )
+    
+    if (!updateData) {
+      return res.status(404).json({ message: '用户不存在' })
+    }
+    
+    console.log('updateData', updateData)
+    res.status(200).json(updateData)
+  } catch (error) {
+    console.error('更新用户信息失败:', error)
+    res.status(500).json({ message: '更新失败', error: error.message })
+  }
 }
 
 module.exports = {

@@ -79,8 +79,8 @@ const update = validatorAll([
     })
     .bail(),
   body('phone')
-    .isEmail()
-    .withMessage('邮箱格式不正确')
+    .isMobilePhone()
+    .withMessage('手机号码格式不正确')
     .bail()
     .custom(async (val) => {
       const existEmail = await Users.findOne({ email: val })

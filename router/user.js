@@ -9,7 +9,7 @@ const userValidator = require('../middleware/validator/userValidator')
 router
   .post('/register', userValidator.register, userController.register)
   .post('/login', userValidator.login, userController.login)
-  .put('/', verifyToken, userController.update)
+  .put('/', verifyToken, userValidator.update, userController.update)
   .get('/getUsers', verifyToken, userController.getUsers)
 
 module.exports = router
